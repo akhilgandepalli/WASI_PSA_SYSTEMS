@@ -11,7 +11,7 @@ import {
 import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
 import { ShoppingCart } from "@mui/icons-material";
 import products from "../products";
-import { globalContext } from "../App";
+import { amountSeparator, globalContext } from "../App";
 import { useNavigate } from "react-router";
 import AfterAddCart from "./AfterAddCart";
 
@@ -125,7 +125,7 @@ const Recommended = () => {
                       fontFamily: "sans-serif",
                     }}
                   >
-                    Rs.{item.price}.00
+                    Rs.{amountSeparator(item.price)}.00
                   </Typography>
                 </CardContent>
                 {/* Hover Overlay */}
@@ -179,7 +179,7 @@ const Recommended = () => {
                       variant="body1"
                       sx={{ mb: 2, fontFamily: "sans-serif" }}
                     >
-                      Rs.{item.price}.00
+                      Rs.{amountSeparator(item.price)}.00
                     </Typography>
                     <AfterAddCart
                       openDialog={openDialog}

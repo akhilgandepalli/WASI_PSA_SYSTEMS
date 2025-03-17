@@ -3,6 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CloseIcon from '@mui/icons-material/Close';
 import Navlinks from "./Navlinks.jsx";
 import {
   Badge,
@@ -56,7 +57,7 @@ const Navbar = () => {
   return (
     <AppBar
       sx={{
-        backgroundColor: "rgba(230, 230, 230, 0.5)",
+        backgroundColor: !top?"rgba(230, 230, 230, 0.5)":'#fff',
         backdropFilter: "blur(10px)",
         position: "fixed",
         top: { xs: 0, md: top },
@@ -110,11 +111,11 @@ const Navbar = () => {
               display: searchOpen ? "flex" : "none",
               justifyContent: "space-between",
               width: { xs: "250px", md: "450px" },
-              padding: "4px",
+              padding: "0",
             }}
           >
             <InputBase
-              sx={{ ml: 1, flex: 1 }}
+              sx={{ p: 1, flex: 1,borderTop:'4px solid #5e8930' }}
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -122,16 +123,18 @@ const Navbar = () => {
             <IconButton
               type="submit"
               sx={{
-                backgroundColor: "#99dc06",
-                p: "4px 6px",
-                "&:hover": { background: "#d6d6d6" },
+                backgroundColor: "#5e8930",
+                color:'#fff',
+                //p: "4px 6px",
+                borderRadius:0,
+                "&:hover": { background: "#5e8950"},
               }}
             >
               <SearchOutlinedIcon />
             </IconButton>
           </Paper>
           <IconButton onClick={() => setSearchOpen(!searchOpen)}>
-            <SearchOutlinedIcon />
+            {searchOpen?<CloseIcon />:<SearchOutlinedIcon />}
           </IconButton>
           <IconButton
             onClick={() => {

@@ -7,17 +7,38 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import { Box, Typography } from "@mui/material";
 import Footer from "./components/Footer.jsx";
-import products from "./products.js";
 import Cart from "./components/Cart.jsx";
 import Product from "./components/Product.jsx";
-import Terms from "./components/Terms.jsx";
 import Contact from "./components/Contact.jsx";
 import Categories from "./components/Categories.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import SearchResult from "./components/SearchResult.jsx";
 import CheckoutForm from "./components/CheckoutForm.jsx";
 import AboutUs from "./components/AboutUs.jsx";
+import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
+import Services from "./components/Services.jsx";
+import Clients from "./components/Clients.jsx";
+import Certifications from "./components/Certifications.jsx";
 
+export function amountSeparator(num) {
+  let str = String(num);
+  let n = str.length;
+
+  // If length is 3 or less, return as is
+  if (n <= 3) return str;
+  let result = [];
+  let firstPartLength = n % 2 === 0 ? 1 : 2; // First group can be 1 or 2 digits
+  // Add the first group
+  result.push(str.slice(0, firstPartLength));
+  str = str.slice(firstPartLength); // Remove processed part
+  // Add remaining parts in groups of 2
+  while (str.length > 3) {
+    result.push(str.slice(0, 2));
+    str = str.slice(2);
+  }
+  result.push(str);
+  return result.join(",");
+}
 
 export const globalContext = createContext();
 
@@ -28,7 +49,7 @@ function App() {
   };
 
   const [cart, setCart] = useState(getCartFromStorage);
-  const [navlink, setNavlink] = useState("")
+  const [navlink, setNavlink] = useState("");
 
   const pages = [
     "Home",
@@ -45,7 +66,9 @@ function App() {
   }, [cart]);
   return (
     <>
-      <globalContext.Provider value={{ cart, setCart, pages, navlink, setNavlink }}>
+      <globalContext.Provider
+        value={{ cart, setCart, pages, navlink, setNavlink }}
+      >
         <BrowserRouter>
           <Box
             sx={{
@@ -60,7 +83,8 @@ function App() {
                 display: { xs: "none", md: "flex" },
                 justifyContent: "flex-start",
                 alignItems: "center",
-                bgcolor: "rgba(235,235,235,1)",
+                color: "#fff",
+                bgcolor: "#253041",
                 pl: 15.5,
                 marginBottom: "100px",
               }}
@@ -68,7 +92,7 @@ function App() {
               <MailOutlineIcon sx={{ fontSize: "13px" }} />
               <Typography
                 sx={{
-                  fontSize: "13px",
+                  fontSize: "14px",
                   padding: "2px 6px",
                   borderRight: "1px dotted",
                   marginRight: "4px",
@@ -89,13 +113,20 @@ function App() {
             <Route path="/products/:name/:id" element={<Product />} />
             <Route path="/contact-us" element={<Contact />} />
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/certifications" element={<Certifications />} />
             <Route path="/search-products" element={<SearchResult />} />
             <Route path="/products/categories/:type" element={<Categories />} />
+            <Route
+              path="/services/service-details/:type"
+              element={<Services />}
+            />
             <Route path="/checkout" element={<CheckoutForm />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
+          <ScrollToTopButton />
+          <Footer />
         </BrowserRouter>
-        <Footer />
       </globalContext.Provider>
     </>
   );

@@ -158,7 +158,7 @@ export default function AfterAddCart({
             sx={{ width: "200px", textTransform: "capitalize", p: 1 }}
             onClick={handleClose}
           >
-            Continue Shopping
+            Continue <Typography variant="button" sx={{display:{xs:'none',md:'inline',textTransform: "capitalize"}}}>&nbsp;Shopping</Typography>
           </Button>
         </DialogActions>
       </BootstrapDialog>

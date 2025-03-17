@@ -17,7 +17,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import products from "../products";
-import { globalContext } from "../App";
+import { amountSeparator, globalContext } from "../App";
 import { useNavigate } from "react-router";
 import AfterAddCart from "./AfterAddCart";
 
@@ -31,8 +31,9 @@ const PrevArrow = ({ onClick }) => (
       transform: "translateY(-50%)",
       zIndex: 2,
       background: "white",
+      borderRadius: 0,
       "&:hover": {
-        background: "gray",
+        background: "rgba(0, 130, 207, 0.8)",
       },
     }}
   >
@@ -51,8 +52,9 @@ const NextArrow = ({ onClick }) => (
       transform: "translateY(-50%)",
       zIndex: 2,
       background: "white",
+      borderRadius: 0,
       "&:hover": {
-        background: "gray",
+        background: "rgba(0, 130, 207, 0.8)",
       },
     }}
   >
@@ -62,15 +64,17 @@ const NextArrow = ({ onClick }) => (
 
 const CardsCarousel = ({ items }) => {
   const [hovered, setHovered] = useState("");
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
   const { cart, setCart } = useContext(globalContext);
   const navigate = useNavigate();
   const settings = {
     dots: true,
-    infinite: false,
-    speed: 500,
+    infinite: true,
+    speed: 1000,
     slidesToShow: 3,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 8000,
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -117,7 +121,7 @@ const CardsCarousel = ({ items }) => {
         ];
       }
     });
-    setOpenDialog(true)
+    setOpenDialog(true);
     //console.log("Cart:", cart); // For debugging
   };
 
@@ -126,7 +130,7 @@ const CardsCarousel = ({ items }) => {
       sx={{
         width: "100%",
         margin: "auto",
-        padding: { xs: "20px", md: "0 112px" },
+        padding: { xs: "20px 12px", md: "0 112px" },
       }}
     >
       {" "}
@@ -185,7 +189,7 @@ const CardsCarousel = ({ items }) => {
                     fontFamily: "sans-serif",
                   }}
                 >
-                  Rs.{item.price}.00
+                  Rs.{amountSeparator(item.price)}.00
                 </Typography>
               </CardContent>
               {/* Hover Overlay */}
@@ -239,9 +243,13 @@ const CardsCarousel = ({ items }) => {
                     variant="body1"
                     sx={{ mb: 2, fontFamily: "sans-serif" }}
                   >
-                    Rs.{item.price}.00
+                    Rs.{amountSeparator(item.price)}.00
                   </Typography>
-                  <AfterAddCart openDialog={openDialog} setOpenDialog={setOpenDialog} productItem={item} />
+                  <AfterAddCart
+                    openDialog={openDialog}
+                    setOpenDialog={setOpenDialog}
+                    productItem={item}
+                  />
                 </Box>
               )}
             </Card>

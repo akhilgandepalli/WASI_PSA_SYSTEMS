@@ -1,128 +1,114 @@
-import React, { useState, useEffect } from "react";
-import { Box, IconButton } from "@mui/material";
-import { ArrowForwardIos, Circle, CircleOutlined } from "@mui/icons-material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Box, Button, styled, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
 
-const images = [
-  "Nitrogen Gas Plant.JPG",
-  "Compressed Air Filters.jpg",
-  "zpstock-image-935.jpg",
-  "zpstock-image-936.jpg",
+const slides = [
+  {
+    image: "/wasipsaplant.jpg",
+    title: "NITROGEN GAS PLANTS",
+    description: "From 5-1000Nm3/Hr with 99%-99.99% Purity",
+    buttonText: "Get a free consultation",
+  },
+  {
+    image: "/service-image.jpg",
+    title: "WELCOME TO WASI PSA SYSTEMS",
+    description: "Power Backup Solutions",
+    buttonText: "Get a free consultation",
+  }
 ];
 
 const Carousel = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [slideDirection, setSlideDirection] = useState("right");
-  
-    const handlePrev = () => {
-      setSlideDirection("left");
-      setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
-    };
-  
-    const handleNext = () => {
-      setSlideDirection("right");
-      setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
-    };  
-  
-    // Auto-slide every 3 seconds
-    useEffect(() => {
-      const interval = setInterval(handleNext, 10000);
-      return () => clearInterval(interval);
-    }, []);
+  const navigate = useNavigate()
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 8000,
+    arrows: false,
+  };
+  const AnimatedButton = styled(Button)({
+    width:250,
+    backgroundColor: "#0082cf",
+    color: "white",
+    overflow: "hidden",
+    position: "relative",
+    transition: "color 0.3s ease-in-out",
+    margin: "24px 0",
+    padding: "16px 0",
+    borderRadius: 0,
+    fontSize: "16px",
+    borderRight: "4px solid #5e8930",
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: "100%",
+      width: "100%",
+      height: "100%",
+      backgroundColor: "#5e8930",
+      transition: "left 0.5s ease-in-out",
+    },
+    "&:hover::before": {
+      left: 0,
+    },
+    "&:hover": {
+      color: "white",
+    },
+  });
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        width: "100%",
-        height: "400px",
-        marginTop: {xs:"100px",md:'0px'},
-        overflow: "hidden",
-        borderRadius: "10px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-      }}
-    >
-      {/* Image Slider Container */}
-      <Box
-        sx={{
-          display: "flex",
-          transform: `translateX(${slideDirection === "right" ? -currentIndex * 100 : currentIndex === 0 ? -100 * (images.length - 1) : -currentIndex * 100}%)`,
-          transition: "transform 1.5s ease-in-out",
-        }}
-      >
-        {images.map((image, index) => (
+    <Box sx={{ width: "100%", margin: "auto",}}>
+      <Slider {...settings}>
+        {slides.map((slide, index) => (
           <Box
             key={index}
-            component="img"
-            src={image}
-            alt={`Slide ${index + 1}`}
             sx={{
-              width: "100%",
-              height: "400px",
-              objectFit: "cover",
-              flexShrink: 0,
+              height: 500,
+              backgroundImage: `url(${slide.image})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
             }}
-          />
-        ))}
-      </Box>
-
-      {/* Previous Button */}
-      <IconButton
-        onClick={handlePrev}
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "10px",
-          transform: "translateY(-50%)",
-
-          color: "white",
-          "&:hover": { backgroundColor: {md:"rgba(0,0,0,0.4)"} },
-        }}
-      >
-        <ArrowBackIosNewIcon />
-      </IconButton>
-
-      {/* Next Button */}
-      <IconButton
-        onClick={handleNext}
-        sx={{
-          position: "absolute",
-          top: "50%",
-          right: "10px",
-          transform: "translateY(-50%)",
-
-          color: "white",
-          "&:hover": { backgroundColor: {md:"rgba(0,0,0,0.4)"} },
-        }}
-      >
-        <ArrowForwardIos />
-      </IconButton>
-
-      {/* Indicators (Dots) */}
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: "10px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          gap: "5px",
-        }}
-      >
-        {images.map((_, index) => (
-          <IconButton
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            sx={{ color: "gray", padding: "5px" }}
           >
-            {index === currentIndex ? (
-              <Circle sx={{ fontSize: "12px" }} />
-            ) : (
-              <CircleOutlined sx={{ fontSize: "12px" }} />
-            )}
-          </IconButton>
+            <Box
+              sx={{
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                color: "white",
+                padding: {xs:'76px 12px 0 12px',md:'12px 54px'},
+                borderRadius: 2,
+                display:'flex',
+                flexDirection:'column',
+                justifyContent:'center',
+                alignItems:'flex-start',
+                gap:3,
+                width: "100%",
+                height:'100%',
+                backdropFilter: "blur(4px)",
+              }}
+            >
+              <Typography variant="h4" sx={{color:'#0082cf',fontWeight:'bold',fontSize:{xs:'24px', md:'28px'}}} >
+                {slide.title}
+              </Typography>
+              <Typography variant="h2" sx={{fontWeight:'bold',width:{md:'600px'},color:'#d6d6d6',fontSize:{xs:'32px',md:'60px'}}} >
+                {slide.description}
+              </Typography>
+                     
+              <AnimatedButton variant="contained" color="primary" sx={{p:1}} onClick={()=>{navigate('/contact-us')}}>
+                <span style={{zIndex:1}}>{slide.buttonText}</span>
+              </AnimatedButton>
+            </Box>
+          </Box>
         ))}
-      </Box>
+      </Slider>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { ShoppingCart } from "@mui/icons-material";
+import { Close, ShoppingCart } from "@mui/icons-material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
@@ -7,23 +7,32 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Dialog,
   IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import products from "../products";
-import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
-import { globalContext } from "../App";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import DownloadIcon from "@mui/icons-material/Download";
+import { amountSeparator, globalContext } from "../App";
 import { useNavigate, useParams } from "react-router";
 import Recommended from "./Recommended";
 import AfterAddCart from "./AfterAddCart";
+import Banner from "./Banner";
 const Product = () => {
   const [value, setValue] = useState(1);
   const [openDialog, setOpenDialog] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [open, setOpen] = useState(false);
+
   const { cart, setCart, setNavlink } = useContext(globalContext);
   const { name, id } = useParams();
   const productItem = products.find((item) => item.id == id);
+  const allImages = [productItem?.image];
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -35,6 +44,31 @@ const Product = () => {
   const handleDecrease = () => {
     setValue((prev) => (prev > 1 ? prev - 1 : 1)); // Prevent going below 1
   };
+
+  const handlePrev = () => {
+    setIndex((prevIndex) => prevIndex - 1);
+  };
+
+  const handleNext = () => {
+    setIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const handleMainImageClick = () => {
+    setOpen(true);
+  };
+
+  const handleCloseD = () => {
+    setOpen(false);
+    setIndex(selectedImage);
+  };
+  function downloadImage(url, filename = "downloaded-image.jpg") {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   const handleAddToCart = (product) => {
     setCart((prevCart) => {
@@ -90,10 +124,11 @@ const Product = () => {
 
   useEffect(() => {
     setNavlink("Product");
-  },[]);
+  }, []);
 
   return (
     <>
+      <Banner name={productItem.name} />
       <Box
         sx={{
           display: "flex",
@@ -101,7 +136,7 @@ const Product = () => {
           flexDirection: { xs: "column", md: "row" },
           alignItems: "flex-start",
           gap: 0,
-          margin: { xs: "80px 0 0 0", md: "0 120px 40px 120px" },
+          margin: { xs: "0", md: "40px 120px" },
           padding: "30px",
           border: "1px solid #d6d6d6",
         }}
@@ -116,6 +151,7 @@ const Product = () => {
             border: "1px solid #d6d6d6",
             mb: { xs: 4, md: 0 },
           }}
+          onClick={handleMainImageClick}
         >
           <Box
             component={"img"}
@@ -125,6 +161,7 @@ const Product = () => {
               maxHeight: { md: "400px" },
               maxWidth: { xs: "100%", md: "auto" },
             }}
+            
           />
         </Box>
         <Box
@@ -143,7 +180,7 @@ const Product = () => {
             {productItem.name}
           </Typography>
           <Typography variant="h6">
-            <strong>Price: </strong>Rs.{productItem.price}.00
+            <strong>Price: </strong>Rs.{amountSeparator(productItem.price)}.00
           </Typography>
           <Typography
             variant="body2"
@@ -269,6 +306,123 @@ const Product = () => {
         productItem={productItem}
       />
       <Recommended />
+      <Dialog
+        open={open}
+        onClose={handleCloseD}
+        maxWidth="lg"
+        fullWidth
+        //TransitionComponent={(props) => <Slide direction="left" {...props} />}
+        sx={{
+          width: "100%",
+          "& .MuiDialog-paper": {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: { xs: "10px", md: "20px" },
+            width: "100%",
+            height: { xs: "40%", md: "90%" },
+            margin: "auto",
+            p: { xs: 4, md: 2 },
+            m: { xs: 1, md: 0 },
+            bgcolor: "rgba(0,0,0,0.6)",
+            borderRadius: "8px",
+            position: "relative",
+            overflow: "hidden", // Ensures that overflow is hidden
+          },
+        }}
+      >
+        {/* Close Button */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 14,
+          }}
+        >
+          <IconButton
+            onClick={() => {
+              downloadImage(allImages[0], "product-image-download.jpg");
+            }}
+            sx={{
+              color: "#fff",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              },
+              mr:2
+            }}
+          >
+            <DownloadIcon />
+          </IconButton>
+          <IconButton
+            onClick={handleCloseD}
+            sx={{
+              color: "#fff",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              },
+            }}
+          >
+            <Close />
+          </IconButton>
+        </Box>
+        <IconButton
+          onClick={handleCloseD}
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 14,
+            color: "#fff",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+            },
+          }}
+        >
+          <Close />
+        </IconButton>
+
+        <ArrowBackIosNewIcon
+          onClick={handlePrev}
+          sx={{
+            visibility: index > 0 ? "visible" : "hidden",
+            fontSize: "60px",
+            padding: "8px",
+            color: "#d7e5f9",
+            pr: "12px",
+            "&:hover": {
+              color: "#d7e5f9",
+            },
+          }}
+        />
+
+        <Box
+          component="img"
+          src={allImages[index]}
+          alt={`Full Image ${selectedImage}`}
+          sx={{
+            width: { xs: "80%", md: "100%", lg: "80%" },
+            height: "90%",
+            objectFit: "contain",
+            transition: "opacity .5s ease-in-out",
+          }}
+        />
+        <ArrowForwardIosIcon
+          onClick={handleNext}
+          sx={{
+            visibility: index < allImages.length - 1 ? "visible" : "hidden",
+            fontSize: "60px",
+            padding: "8px",
+            color: "#d7e5f9",
+            pl: "12px",
+            "&:hover": {
+              color: "#d7e5f9",
+            },
+          }}
+        />
+      </Dialog>
     </>
   );
 };

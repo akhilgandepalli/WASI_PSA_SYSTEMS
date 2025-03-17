@@ -52,6 +52,9 @@ export default function Navlinks({ openD, toggleDrawer }) {
     } else if (page === "Contact Us") {
       navigate("/contact-us");
       setNavlink("Contact Us");
+    }else if(page==='Clients'){
+      navigate("/clients");
+      setNavlink("Clients");
     } else {
       navigate(
         `/products/categories/${page.split(" ").join("-").toLowerCase()}`
@@ -62,6 +65,12 @@ export default function Navlinks({ openD, toggleDrawer }) {
     setMenu("");
     window.scrollTo(0, 0);
   };
+  const handleService=(service)=>{
+    navigate(`/services/service-details/${service.split(" ").join("-").toLowerCase()}`)
+    toggleDrawer(false)();
+    setMenu("");
+    window.scrollTo(0, 0);
+  }
 
   return (
     <>
@@ -88,13 +97,11 @@ export default function Navlinks({ openD, toggleDrawer }) {
               }}
               sx={{
                 visibility: pages.length < 5 && "hidden",
-                color: page == menu ? "#fff" : "#364253",
-                bgcolor:
-                  page == menu ? "rgba(0, 131, 207, 0.67)" : "transparent",
-                fontSize: "18px",
-                textTransform: "capitalize",
-
-                //"&:hover": { bgcolor: "#0082cf", color: "#fff" },
+                color:'#364253',
+                fontSize: "14px",
+                fontWeight:'bold',
+                textTransform: 'uppercase',
+                "&:hover": {bgcolor: "rgba(156, 221, 0, 0.67)" },
               }}
             >
               {page}
@@ -112,13 +119,14 @@ export default function Navlinks({ openD, toggleDrawer }) {
                 handleMenu(page);
               }}
               sx={{
-                textTransform: "capitalize",
+                textTransform: "uppercase",
                 color: navlink === page ? "#fff" : "#364253",
                 backgroundColor:
                   navlink === page ? "rgba(0, 130, 207, 1)" : "transparent",
                 borderRadius: "4px",
-                "&:hover": { backgroundColor: "rgba(0, 131, 207, 0.67)" },
-                fontSize: "18px",
+                "&:hover": { bgcolor: "rgba(156, 221, 0, 0.65)" },
+                fontSize: "14px",
+                fontWeight:'bold'
               }}
             >
               {page}
@@ -133,7 +141,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
             position: "absolute",
             top: 35,
             right: 10,
-            bgcolor: "#fff",
+            bgcolor: "#f5f5f5",
             flexWrap: menu == "Products" ? "wrap" : "nowrap",
           }}
           onMouseEnter={() => {
@@ -150,6 +158,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
                 width: "330px",
                 borderBottom: "1px solid #d6d6d6",
                 color: "#364253",
+                bgcolor: navlink==type?'#99dc06':'#fff',
                 fontSize: "13px",
                 fontWeight: "bold",
                 textTransform: "capitalize",
@@ -172,7 +181,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
             position: "absolute",
             top: 35,
             right: 10,
-            bgcolor: "#fff",
+            bgcolor: "#f5f5f5",
           }}
           onMouseEnter={() => {
             setMenu("Services");
@@ -188,6 +197,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
                 width: "330px",
                 borderBottom: "1px solid #d6d6d6",
                 color: "#364253",
+                bgcolor: navlink==type?'#99dc06':'#fff',
                 fontSize: "13px",
                 fontWeight: "bold",
                 textTransform: "capitalize",
@@ -196,7 +206,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
                 margin: "4px",
                 "&:hover": { bgcolor: "#364253", color: "#fff" },
               }}
-              onClick={() => handleMenu(type)}
+              onClick={() => handleService(type)}
             >
               <KeyboardArrowRightIcon key={type + "icon"} />
               {type}
@@ -228,7 +238,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
               <CloseIcon />
             </IconButton>
           </Box>
-          <List key={'main'} sx={{ borderBottom: "4px solid #364253" }}>
+          <List sx={{ borderBottom: "4px solid #364253" }}>
             {pages.map((page, i) => (
               <>
                 <ListItem
@@ -305,7 +315,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
                         <ListItem
                           button
                           key={service}
-                          onClick={() => handleMenu(service)}
+                          onClick={() => handleService(service)}
                           sx={{
                             pl: 4,
                             color: navlink === service ? "#fff" : "#364253",

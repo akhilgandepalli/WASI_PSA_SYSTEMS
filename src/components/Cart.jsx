@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Add, Remove, Delete } from "@mui/icons-material";
 import { useContext, useEffect } from "react";
-import { globalContext } from "../App";
+import { amountSeparator, globalContext } from "../App";
 import { useNavigate } from "react-router";
 
 const ShowCart = () => {
@@ -21,7 +21,13 @@ const ShowCart = () => {
       (prevCart) =>
         prevCart
           .map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity + delta } : item
+            item.id === id
+              ? {
+                  ...item,
+                  quantity:
+                    item.quantity >= 10 && delta==1 ? item.quantity : item.quantity + delta,
+                }
+              : item
           )
           .filter((item) => item.quantity > 0) // Remove item if quantity is 0
     );
@@ -30,7 +36,7 @@ const ShowCart = () => {
   const handleRemoveItem = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
-  const handleItemClick=(item) => {
+  const handleItemClick = (item) => {
     navigate(
       `/products/${item.name
         .split("/")
@@ -40,13 +46,16 @@ const ShowCart = () => {
         .toLowerCase()}/${item.id}`
     );
     window.scrollTo(0, 0);
-  }
+  };
 
   // Calculate subtotal
-  const subtotal = cart.length>0?cart.reduce(
-    (total, item) => total + parseFloat(item.price) * item.quantity,
-    0
-  ):0;
+  const subtotal =
+    cart.length > 0
+      ? cart.reduce(
+          (total, item) => total + parseFloat(item.price) * item.quantity,
+          0
+        )
+      : 0;
   useEffect(() => {
     setNavlink("Cart");
   });
@@ -66,7 +75,7 @@ const ShowCart = () => {
         <Typography variant="h6" sx={{ mb: 2 }}>
           🛒 Your Cart
         </Typography>
-      {/* Empty Cart */}
+        {/* Empty Cart */}
         {cart.length === 0 ? (
           <Box
             sx={{
@@ -114,7 +123,9 @@ const ShowCart = () => {
                   objectFit: "cover",
                   borderRadius: 1,
                 }}
-                onClick={()=>{handleItemClick(item)}}
+                onClick={() => {
+                  handleItemClick(item);
+                }}
               />
               <CardContent
                 sx={{
@@ -130,12 +141,14 @@ const ShowCart = () => {
                   fontWeight="bold"
                   color="#364253"
                   sx={{ fontSize: { xs: "16px" } }}
-                  onClick={()=>{handleItemClick(item)}}
+                  onClick={() => {
+                    handleItemClick(item);
+                  }}
                 >
                   {item.name}
                 </Typography>
                 <Typography variant="body2" fontWeight="bold" color="#000">
-                  Rs.{item.price}.00
+                  Rs.{amountSeparator(item.price)}.00
                 </Typography>
                 <Box
                   sx={{ display: "flex", alignItems: "center", gap: 1, ml: -1 }}
@@ -167,7 +180,7 @@ const ShowCart = () => {
                   sx={{ minWidth: 80, textAlign: "right" }}
                 >
                   Rs.
-                  {(parseFloat(item.price) * item.quantity).toFixed(2)}
+                  {amountSeparator(parseFloat(item.price) * item.quantity)}.00
                 </Typography>
                 <Button
                   variant="outlined"
@@ -200,18 +213,27 @@ const ShowCart = () => {
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Typography variant="body1" sx={{ mb: 1 }}>
-            Subtotal: <strong>Rs.{subtotal.toFixed(2)}</strong>
+            Subtotal: <strong>Rs.{amountSeparator(subtotal)}.00</strong>
           </Typography>
           <Button
             variant="contained"
             color="primary"
             fullWidth
             sx={{ mb: 1, bgcolor: "#0082cf" }}
-            onClick={()=>{navigate('/checkout')}}
+            onClick={() => {
+              navigate("/checkout");
+            }}
           >
             Checkout
           </Button>
-          <Button variant="outlined" fullWidth sx={{ color: "#0082cf" }} onClick={()=>{navigate('/')}} >
+          <Button
+            variant="outlined"
+            fullWidth
+            sx={{ color: "#0082cf" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             Continue Shopping
           </Button>
         </Box>
