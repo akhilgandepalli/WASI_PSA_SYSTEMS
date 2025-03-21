@@ -11,11 +11,11 @@ import {
 import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
 import { ShoppingCart } from "@mui/icons-material";
 import products from "../products";
-import { amountSeparator, globalContext } from "../App";
+import {globalContext } from "../App";
 import { useNavigate } from "react-router";
 import AfterAddCart from "./AfterAddCart";
 
-const Recommended = () => {
+const Recommended = ({setValue}) => {
   const [hovered, setHovered] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const { setCart } = useContext(globalContext);
@@ -41,7 +41,6 @@ const Recommended = () => {
               id: product.id,
               name: product.name,
               image: product.image,
-              price: product.price,
             },
             quantity: 1,
           },
@@ -57,7 +56,7 @@ const Recommended = () => {
       <Box sx={{ padding: { xs: "80px 8px", md: "0px 120px" } }}>
         <Typography
           variant="h5"
-          sx={{ textAlign: "center", padding: "60px 0" }}
+          sx={{ textAlign: "center", padding: "40px 0" }}
         >
           Recommended Products
         </Typography>
@@ -71,7 +70,7 @@ const Recommended = () => {
             mb: 6,
           }}
         >
-          {products.slice(0, 5).map((item) => (
+          {products.slice(2, 8).map((item) => (
             <Box
               key={item.id}
               sx={{ px: 1, position: "relative" }}
@@ -82,7 +81,7 @@ const Recommended = () => {
               <Card
                 elevation={5}
                 sx={{
-                  minHeight: 300,
+                  height: 250,
                   width: 320,
                   display: "flex",
                   flexDirection: "column",
@@ -109,7 +108,7 @@ const Recommended = () => {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "start",
+                    alignItems: "center",
                     justifyContent: "space-between",
                     gap: 2,
                   }}
@@ -117,7 +116,7 @@ const Recommended = () => {
                   <Typography variant="p" sx={{ color: "#364253" }}>
                     {item.name}
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     variant="body1"
                     sx={{
                       color: "#000",
@@ -126,7 +125,7 @@ const Recommended = () => {
                     }}
                   >
                     Rs.{amountSeparator(item.price)}.00
-                  </Typography>
+                  </Typography> */}
                 </CardContent>
                 {/* Hover Overlay */}
                 {hovered === item.id && (
@@ -155,6 +154,8 @@ const Recommended = () => {
                           .join("-")
                           .toLowerCase()}/${item.id}`
                       );
+                      //location.reload();
+                      setValue(1)
                       window.scrollTo(0, 0);
                     }}
                   >
@@ -175,12 +176,12 @@ const Recommended = () => {
                     <Button sx={{ color: "#fff" }}>
                       <ZoomOutMapOutlinedIcon />
                     </Button>
-                    <Typography
+                    {/* <Typography
                       variant="body1"
                       sx={{ mb: 2, fontFamily: "sans-serif" }}
                     >
                       Rs.{amountSeparator(item.price)}.00
-                    </Typography>
+                    </Typography> */}
                     <AfterAddCart
                       openDialog={openDialog}
                       setOpenDialog={setOpenDialog}

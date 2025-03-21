@@ -25,10 +25,11 @@ const ContactForm = () => {
   const onSubmit = async (data) => {
     if (cart.length > 0) {
       setSubmitData(await { ...data, cartItems: cart });
-      console.log(await data);
+      console.log(await { ...data, cartItems: cart });
       reset();
       alert("Request Submitted");
-      setCart([]);
+      setCart([]);     
+      window.scrollTo({top:0,behavior:'smooth'});
       navigate("/");
     } else {
       alert("Your Cart is Empty!\n\nPlease add items in your cart");

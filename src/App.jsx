@@ -59,6 +59,47 @@ function App() {
     "Clients",
     "Contact Us",
   ];
+  const clientImages = [
+    "/clients/client1.png",
+    "/clients/client2.png",
+    "/clients/client3.png",
+    "/clients/client4.jpeg",
+    "/clients/client5.jpeg",
+    "/clients/client6.png",
+    "/clients/client7.jpeg",
+    "/clients/client8.jpeg",
+    "/clients/client9.png",
+    "/clients/client10.png",
+    "/clients/client11.png",
+    "/clients/client12.jpeg",
+    "/clients/client13.png",
+    "/clients/client14.png",
+    "/clients/client15.jpeg",
+    "/clients/client16.png",
+    "/clients/client17.jpeg",
+    "/clients/client18.png",
+    "/clients/client19.png",
+    "/clients/client20.png",
+    "/clients/client21.jpeg",
+    "/clients/client22.png",
+    "/clients/client23.jpeg",
+    "/clients/client24.jpeg",
+    "/clients/client25.png",
+    "/clients/client26.jpeg",
+    "/clients/client27.png",
+    "/clients/client28.jpeg",
+    "/clients/client29.jpeg",
+    "/clients/client30.jpeg",
+    "/clients/client31.png",
+    "/clients/client32.png",
+    "/clients/client33.png",
+    "/clients/client34.png",
+    "/clients/client35.jpeg",
+    "/clients/client36.jpeg",
+    "/clients/client37.jpeg",
+    "/clients/client38.png",
+    "/clients/client39.png",
+  ];
 
   // Save cart to session storage whenever it changes
   useEffect(() => {
@@ -67,7 +108,7 @@ function App() {
   return (
     <>
       <globalContext.Provider
-        value={{ cart, setCart, pages, navlink, setNavlink }}
+        value={{ cart, setCart, pages, navlink, setNavlink, clientImages }}
       >
         <BrowserRouter>
           <Box

@@ -1,59 +1,37 @@
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { amountSeparator, globalContext } from "../App";
+import {globalContext } from "../App";
 import { useNavigate } from "react-router";
 import ContactForm from "./ContactForm";
 
 const CheckoutForm = () => {
-  const { cart, setCart, setNavlink } = useContext(globalContext);
-  const [shippingData, setShippingData] = useState("");
-  const {
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors },
-    setFocus,
-  } = useForm({
-    defaultValues: {
-      firstname: "",
-      lastname: "",
-      email: "",
-      address: "",
-      city: "",
-      country: "",
-      state: "",
-      pincode: "",
-      mobile: "",
-    },
-  });
-
+  const { cart, setNavlink } = useContext(globalContext);
   const navigate = useNavigate();
 
-  const subtotal = cart.length>0?cart.reduce(
-    (total, item) => total + parseFloat(item.price) * item.quantity,
-    0
-  ):0;
+  const subTotal =
+    cart.length > 0
+      ? cart.reduce((total, item) => total + item.quantity, 0)
+      : 0;
 
-  const onSubmit = (data) => {
-    setShippingData({ ...data, total: subtotal });
-    alert(
-      `Your order is Placed\nTotal amount: Rs.${subtotal}.00\nWe will contact you soon.\n\n Thank you`
-    );
-    setCart([]);
-    navigate("/");
-    window.scrollTo(0,0)
-  };
+  // const onSubmit = (data) => {
+  //   setShippingData({ ...data });
+  //   alert(
+  //     `Your order is Placed\nTotal items: ${subtotal}\nWe will contact you soon.\n\n Thank you`
+  //   );
+  //   setCart([]);
+  //   navigate("/");
+  //   window.scrollTo(0, 0);
+  // };
 
   useEffect(() => {
     setNavlink("checkout");
-    console.log("Shipping Data", shippingData);
   });
 
   return (
     <Box
       sx={{
-        border: {md:"1px solid #d6d6d6"},
+        border: { md: "1px solid #d6d6d6" },
         margin: { xs: "60px 20px", md: "0 120px" },
       }}
     >
@@ -68,7 +46,7 @@ const CheckoutForm = () => {
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "center",
-          gap:{md:4}
+          gap: { md: 4 },
         }}
       >
         <ContactForm />
@@ -87,9 +65,9 @@ const CheckoutForm = () => {
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Typography variant="body2" sx={{ mb: 3 }}>
-            Subtotal{` (${cart.length>1?cart.length+') items':+cart.length+') item'}`}:{" "}
+            Total:{" "}
             <strong style={{ fontSize: "16px" }}>
-              Rs.{amountSeparator(subtotal)}.00
+              {subTotal + ` ${subTotal > 1 ? "items" : "item"} `}
             </strong>
           </Typography>
           <Button

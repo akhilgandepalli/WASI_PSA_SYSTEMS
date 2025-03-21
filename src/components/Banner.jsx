@@ -34,6 +34,7 @@ const Banner = ({name}) => {
               padding: { xs: "24px 0 32px 0", md: "40px 0 54px 0" },
               fontSize: { xs: "32px", md: "64px" },
               mt: { xs: 8, md: 0 },
+              textAlign:'center'
             }}
           >
             {name}

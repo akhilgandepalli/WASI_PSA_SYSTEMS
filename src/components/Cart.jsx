@@ -25,7 +25,9 @@ const ShowCart = () => {
               ? {
                   ...item,
                   quantity:
-                    item.quantity >= 10 && delta==1 ? item.quantity : item.quantity + delta,
+                    item.quantity >= 10 && delta == 1
+                      ? item.quantity
+                      : item.quantity + delta,
                 }
               : item
           )
@@ -49,12 +51,17 @@ const ShowCart = () => {
   };
 
   // Calculate subtotal
-  const subtotal =
+  // const subtotal =
+  //   cart.length > 0
+  //     ? cart.reduce(
+  //         (total, item) => total + parseFloat(item.price) * item.quantity,
+  //         0
+  //       )
+  //     : 0;
+  //Total items
+  const subTotal =
     cart.length > 0
-      ? cart.reduce(
-          (total, item) => total + parseFloat(item.price) * item.quantity,
-          0
-        )
+      ? cart.reduce((total, item) => total + item.quantity, 0)
       : 0;
   useEffect(() => {
     setNavlink("Cart");
@@ -147,9 +154,9 @@ const ShowCart = () => {
                 >
                   {item.name}
                 </Typography>
-                <Typography variant="body2" fontWeight="bold" color="#000">
+                {/* <Typography variant="body2" fontWeight="bold" color="#000">
                   Rs.{amountSeparator(item.price)}.00
-                </Typography>
+                </Typography> */}
                 <Box
                   sx={{ display: "flex", alignItems: "center", gap: 1, ml: -1 }}
                 >
@@ -175,12 +182,12 @@ const ShowCart = () => {
               <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 <Typography
                   variant="body1"
-                  fontWeight="bold"
+                  //fontWeight="bold"
                   color="#364253"
                   sx={{ minWidth: 80, textAlign: "right" }}
                 >
-                  Rs.
-                  {amountSeparator(parseFloat(item.price) * item.quantity)}.00
+                  
+                  Quantity: <strong>{item.quantity}</strong>
                 </Typography>
                 <Button
                   variant="outlined"
@@ -213,7 +220,8 @@ const ShowCart = () => {
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Typography variant="body1" sx={{ mb: 1 }}>
-            Subtotal: <strong>Rs.{amountSeparator(subtotal)}.00</strong>
+            {/* Subtotal: <strong>Rs.{amountSeparator(subtotal)}.00</strong> */}
+            Total items:<strong>&nbsp;{amountSeparator(subTotal)}</strong>
           </Typography>
           <Button
             variant="contained"

@@ -68,13 +68,13 @@ const CardsCarousel = ({ items }) => {
   const { cart, setCart } = useContext(globalContext);
   const navigate = useNavigate();
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 1000,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 8000,
+    autoplaySpeed: 3000,
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -114,7 +114,6 @@ const CardsCarousel = ({ items }) => {
               id: product.id,
               name: product.name,
               image: product.image,
-              price: product.price,
             },
             quantity: 1,
           },
@@ -130,58 +129,59 @@ const CardsCarousel = ({ items }) => {
       sx={{
         width: "100%",
         margin: "auto",
-        padding: { xs: "20px 12px", md: "0 112px" },
+        padding: { xs: "20px 12px", md: "20px 112px" },
       }}
     >
       {" "}
       {/* Set width to 800px and center */}
       <Slider {...settings}>
-        {items.map((item, i) => (
-          <Box
-            key={item.id}
-            sx={{ px: 1, position: "relative" }}
-            onMouseEnter={() => setHovered(item.id)}
-            onMouseLeave={() => setHovered(null)}
-          >
-            {/* item Card */}
-            <Card
-              elevation={5}
-              sx={{
-                minHeight: 300,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                textAlign: "center",
-                position: "relative",
-                transition: "0.3s",
-                backgroundColor: hovered === item.id ? "#333" : "#fff",
-                color: "#000",
-              }}
+        {items.map((item, i) =>
+          item.id ? (
+            <Box
+              key={item.id}
+              sx={{ px: 1, position: "relative" }}
+              onMouseEnter={() => setHovered(item.id)}
+              onMouseLeave={() => setHovered(null)}
             >
-              <CardMedia
-                component={"img"}
-                image={item.image}
-                title={item.name}
+              {/* item Card */}
+              <Card
+                elevation={5}
                 sx={{
-                  height: 200,
-                  opacity: hovered === item.id ? 0.3 : 1,
-                  transition: "0.3s",
-                  objectFit: "contain",
-                }}
-              />
-              <CardContent
-                sx={{
+                  minHeight: 250,
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "start",
                   justifyContent: "space-between",
-                  gap: 2,
+                  textAlign: "center",
+                  position: "relative",
+                  transition: "0.3s",
+                  backgroundColor: hovered === item.id ? "#333" : "#fff",
+                  color: "#000",
                 }}
               >
-                <Typography variant="p" sx={{ color: "#364253" }}>
-                  {item.name}
-                </Typography>
-                <Typography
+                <CardMedia
+                  component={"img"}
+                  image={item.image}
+                  title={item.name}
+                  sx={{
+                    height: 200,
+                    opacity: hovered === item.id ? 0.3 : 1,
+                    transition: "0.3s",
+                    objectFit: "contain",
+                  }}
+                />
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 2,
+                  }}
+                >
+                  <Typography variant="p" sx={{ color: "#364253" }}>
+                    {item.name}
+                  </Typography>
+                  {/* <Typography
                   variant="body1"
                   sx={{
                     color: "#000",
@@ -190,71 +190,109 @@ const CardsCarousel = ({ items }) => {
                   }}
                 >
                   Rs.{amountSeparator(item.price)}.00
-                </Typography>
-              </CardContent>
-              {/* Hover Overlay */}
-              {hovered === item.id && (
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 4,
-                    background: "rgba(0, 0, 0, 0.7)",
-                    color: "white",
-                    transition: "0.3s",
-                  }}
-                  onClick={() => {
-                    navigate(
-                      `/products/${item.name
-                        .split("/")
-                        .join("")
-                        .split(" ")
-                        .join("-")
-                        .toLowerCase()}/${item.id}`
-                    );
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <Typography variant="h6">{item.name}</Typography>
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    endIcon={<ShoppingCart />}
-                    sx={{ textTransform: "capitalize" }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddToCart(item);
+                </Typography> */}
+                </CardContent>
+                {/* Hover Overlay */}
+                {hovered === item.id && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 4,
+                      background: "rgba(0, 0, 0, 0.7)",
+                      color: "white",
+                      transition: "0.3s",
+                    }}
+                    onClick={() => {
+                      navigate(
+                        `/products/${item.name
+                          .split("/")
+                          .join("")
+                          .split(" ")
+                          .join("-")
+                          .toLowerCase()}/${item.id}`
+                      );
+                      window.scrollTo(0, 0);
                     }}
                   >
-                    Add to Cart
-                  </Button>
-                  <Button sx={{ color: "#fff" }}>
-                    <ZoomOutMapOutlinedIcon />
-                  </Button>
-                  <Typography
+                    <Typography variant="h6">{item.name}</Typography>
+
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      endIcon={<ShoppingCart />}
+                      sx={{ textTransform: "capitalize" }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(item);
+                      }}
+                    >
+                      Add to Cart
+                    </Button>
+                    <Button sx={{ color: "#fff" }}>
+                      <ZoomOutMapOutlinedIcon />
+                    </Button>
+                    {/* <Typography
                     variant="body1"
                     sx={{ mb: 2, fontFamily: "sans-serif" }}
                   >
                     Rs.{amountSeparator(item.price)}.00
-                  </Typography>
-                  <AfterAddCart
-                    openDialog={openDialog}
-                    setOpenDialog={setOpenDialog}
-                    productItem={item}
-                  />
-                </Box>
-              )}
-            </Card>
-          </Box>
-        ))}
+                  </Typography> */}
+                    <AfterAddCart
+                      openDialog={openDialog}
+                      setOpenDialog={setOpenDialog}
+                      productItem={item}
+                    />
+                  </Box>
+                )}
+              </Card>
+            </Box>
+          ) : (
+            <Box
+            key={item}
+              sx={{
+                height: 150,
+                display: "flex",
+                justifyContent: "space-between",
+                textAlign: "center",
+                color: "#000",
+                //margin:{md:'0 12px'}
+                px:1,
+              }}
+            >
+              <Card
+                elevation={0}
+                sx={{
+                  height: 150,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#000",
+                  padding: "8px 16px",
+                  borderRadius:4,
+                }}
+              >
+                <CardMedia
+                  component={"img"}
+                  image={item}
+                  title={item}
+                  sx={{
+                    width: 140,
+                    transition: "0.3s",
+                    objectFit: "contain",
+                  }}
+                />
+              </Card>
+            </Box>
+          )
+        )}
       </Slider>
     </Box>
   );

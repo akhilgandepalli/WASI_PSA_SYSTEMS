@@ -46,7 +46,6 @@ const SearchResult = () => {
               id: product.id,
               name: product.name,
               image: product.image,
-              price: product.price,
             },
             quantity: 1,
           },
@@ -64,8 +63,9 @@ const SearchResult = () => {
   );
 
   useEffect(()=>{
-    setNavlink('Search Products')
-  })
+    setNavlink('Search Products');
+    window.scrollTo(0,0)
+  },[])
 
   return (
     <>
@@ -103,7 +103,7 @@ const SearchResult = () => {
                 <Card
                   elevation={5}
                   sx={{
-                    minHeight: 300,
+                    minHeight: 250,
                     width: 320,
                     display: "flex",
                     flexDirection: "column",
@@ -130,7 +130,7 @@ const SearchResult = () => {
                     sx={{
                       display: "flex",
                       flexDirection: "column",
-                      alignItems: "start",
+                      alignItems: "center",
                       justifyContent: "space-between",
                       gap: 2,
                     }}
@@ -138,7 +138,7 @@ const SearchResult = () => {
                     <Typography variant="p" sx={{ color: "#364253" }}>
                       {item.name}
                     </Typography>
-                    <Typography
+                    {/* <Typography
                       variant="body1"
                       sx={{
                         color: "#000",
@@ -147,7 +147,7 @@ const SearchResult = () => {
                       }}
                     >
                       Rs.{amountSeparator(item.price)}.00
-                    </Typography>
+                    </Typography> */}
                   </CardContent>
                   {/* Hover Overlay */}
                   {hovered === item.id && (
@@ -196,12 +196,12 @@ const SearchResult = () => {
                       <Button sx={{ color: "#fff" }}>
                         <ZoomOutMapOutlinedIcon />
                       </Button>
-                      <Typography
+                      {/* <Typography
                         variant="body1"
                         sx={{ mb: 2, fontFamily: "sans-serif" }}
                       >
                         Rs.{amountSeparator(item.price)}.00
-                      </Typography>
+                      </Typography> */}
                       <AfterAddCart
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}

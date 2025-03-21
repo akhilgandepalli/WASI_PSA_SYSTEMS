@@ -14,7 +14,7 @@ import { globalContext } from "../App.jsx";
 import ContactForm from "./ContactForm.jsx";
 
 const Home = () => {
-  const { setNavlink } = useContext(globalContext);
+  const { setNavlink, clientImages} = useContext(globalContext);
   const navigate = useNavigate();
   //filter items as per type
   const molecularSieves = products.filter((e) => e.type === "Molecular Sieves");
@@ -567,6 +567,37 @@ const Home = () => {
             </Typography>
           </Box>
         </Box>
+      </Box>
+      <Box sx={{ mb: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: { xs: "30px 10px", md: "20px 120px" },
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{ color: "#0082cf", padding: { xs: 1, md: 0 },fontWeight:'bold' }}
+          >
+            Clients
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#253041",
+              textTransform: "capitalize",
+            }}
+            onClick={() => {
+              navigate("/clients");
+              window.scrollTo(0, 0);
+            }}
+          >
+            View all
+          </Button>
+        </Box>
+        <CardsCarousel items={clientImages} />
       </Box>
     </Box>
   );

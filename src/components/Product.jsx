@@ -17,8 +17,8 @@ import products from "../products";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import DownloadIcon from "@mui/icons-material/Download";
-import { amountSeparator, globalContext } from "../App";
-import { useNavigate, useParams } from "react-router";
+import {globalContext } from "../App";
+import {useParams } from "react-router";
 import Recommended from "./Recommended";
 import AfterAddCart from "./AfterAddCart";
 import Banner from "./Banner";
@@ -26,7 +26,6 @@ const Product = () => {
   const [value, setValue] = useState(1);
   const [openDialog, setOpenDialog] = useState(false);
   const [index, setIndex] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(0);
   const [open, setOpen] = useState(false);
 
   const { cart, setCart, setNavlink } = useContext(globalContext);
@@ -59,7 +58,7 @@ const Product = () => {
 
   const handleCloseD = () => {
     setOpen(false);
-    setIndex(selectedImage);
+    setIndex(0);
   };
   function downloadImage(url, filename = "downloaded-image.jpg") {
     const link = document.createElement("a");
@@ -97,7 +96,6 @@ const Product = () => {
               id: product.id,
               name: product.name,
               image: product.image,
-              price: product.price,
             },
             quantity: Number(value),
           },
@@ -111,7 +109,6 @@ const Product = () => {
               id: product.id,
               name: product.name,
               image: product.image,
-              price: product.price,
             },
             quantity: 1,
           },
@@ -124,6 +121,8 @@ const Product = () => {
 
   useEffect(() => {
     setNavlink("Product");
+    setValue(1);
+    console.log('value update',value)
   }, []);
 
   return (
@@ -170,7 +169,7 @@ const Product = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            gap: 3,
+            gap: 4,
           }}
         >
           <Typography
@@ -179,9 +178,9 @@ const Product = () => {
           >
             {productItem.name}
           </Typography>
-          <Typography variant="h6">
+          {/* <Typography variant="h6">
             <strong>Price: </strong>Rs.{amountSeparator(productItem.price)}.00
-          </Typography>
+          </Typography> */}
           <Typography
             variant="body2"
             sx={{ color: "#fff", bgcolor: "blue", textAlign: "center" }}
@@ -245,13 +244,6 @@ const Product = () => {
                       readOnly: true,
                     },
                   }}
-                  InputProps={{
-                    inputProps: {
-                      min: 1,
-                      step: 1,
-                      max: 10,
-                    }, // Ensures value starts at 1 and increments/decrements by 1
-                  }}
                   variant="outlined"
                   size="small"
                   sx={{ width: { md: "200px" } }}
@@ -305,7 +297,7 @@ const Product = () => {
         setOpenDialog={setOpenDialog}
         productItem={productItem}
       />
-      <Recommended />
+      <Recommended setValue={setValue} />
       <Dialog
         open={open}
         onClose={handleCloseD}
@@ -401,7 +393,7 @@ const Product = () => {
         <Box
           component="img"
           src={allImages[index]}
-          alt={`Full Image ${selectedImage}`}
+          alt={`Full Image 1`}
           sx={{
             width: { xs: "80%", md: "100%", lg: "80%" },
             height: "90%",

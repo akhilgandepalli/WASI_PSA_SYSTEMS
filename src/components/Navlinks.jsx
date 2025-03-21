@@ -243,7 +243,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
               <>
                 <ListItem
                   button
-                  key={page + i}
+                  key={'list'+i}
                   onClick={() => {
                     if (page == "Products" || page == "Services") {
                       setMenu(page !== menu ? page : "");
