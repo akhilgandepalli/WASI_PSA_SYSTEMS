@@ -19,26 +19,9 @@ import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
 import Services from "./components/Services.jsx";
 import Clients from "./components/Clients.jsx";
 import Certifications from "./components/Certifications.jsx";
-
-export function amountSeparator(num) {
-  let str = String(num);
-  let n = str.length;
-
-  // If length is 3 or less, return as is
-  if (n <= 3) return str;
-  let result = [];
-  let firstPartLength = n % 2 === 0 ? 1 : 2; // First group can be 1 or 2 digits
-  // Add the first group
-  result.push(str.slice(0, firstPartLength));
-  str = str.slice(firstPartLength); // Remove processed part
-  // Add remaining parts in groups of 2
-  while (str.length > 3) {
-    result.push(str.slice(0, 2));
-    str = str.slice(2);
-  }
-  result.push(str);
-  return result.join(",");
-}
+import AdminLogin from "./components/AdminLogin.jsx";
+import AdminPage from "./components/AdminPage.jsx";
+import { a } from "framer-motion/client";
 
 export const globalContext = createContext();
 
@@ -47,9 +30,14 @@ function App() {
     const storedCart = sessionStorage.getItem("cart");
     return storedCart ? JSON.parse(storedCart) : [];
   };
+  const getAdminDetails = () => {
+    const adminDetails = sessionStorage.getItem("admin");
+    return adminDetails ? JSON.parse(adminDetails) : {isAdmin:false,username:""};
+  };
 
   const [cart, setCart] = useState(getCartFromStorage);
   const [navlink, setNavlink] = useState("");
+  const [adminData, setAdminData] = useState(getAdminDetails);
 
   const pages = [
     "Home",
@@ -100,15 +88,30 @@ function App() {
     "/clients/client38.png",
     "/clients/client39.png",
   ];
+  const adminCredentials = {
+    name: "Wasi_PSA_Systems",
+    password: "isaW#psa@2014",
+  };
 
   // Save cart to session storage whenever it changes
   useEffect(() => {
     sessionStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    sessionStorage.setItem("admin", JSON.stringify(adminData));
+  }, [cart, adminData]);
   return (
     <>
       <globalContext.Provider
-        value={{ cart, setCart, pages, navlink, setNavlink, clientImages }}
+        value={{
+          cart,
+          setCart,
+          pages,
+          navlink,
+          setNavlink,
+          clientImages,
+          adminData,
+          setAdminData,
+          adminCredentials
+        }}
       >
         <BrowserRouter>
           <Box
@@ -150,6 +153,8 @@ function App() {
           </Box>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/:username" element={<AdminPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/products/:name/:id" element={<Product />} />
             <Route path="/contact-us" element={<Contact />} />

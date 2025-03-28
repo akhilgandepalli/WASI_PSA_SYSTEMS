@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
-import { amountSeparator, globalContext } from "../App";
+import { globalContext } from "../App";
 import { useNavigate, useParams } from "react-router";
 import { ShoppingCart } from "@mui/icons-material";
 import AfterAddCart from "./AfterAddCart";
@@ -24,7 +24,7 @@ const Categories = () => {
     .split("-")
     .map((e) => e[0].toUpperCase() + e.slice(1))
     .join(" ");
-  const items = products.filter((item) => {
+  const items = products?.filter((item) => {
     if (type === "all-products") {
       return item;
     } else if (type == "psa-gas-plants") {
@@ -136,16 +136,7 @@ const Categories = () => {
                     <Typography variant="p" sx={{ color: "#364253" }}>
                       {item.name}
                     </Typography>
-                    {/* <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#000",
-                        fontWeight: 600,
-                        fontFamily: "sans-serif",
-                      }}
-                    >
-                      Rs.{amountSeparator(item.price)}.00
-                    </Typography> */}
+                    
                   </CardContent>
 
                   {/* Hover Overlay */}
@@ -195,12 +186,7 @@ const Categories = () => {
                       <Button sx={{ color: "#fff" }}>
                         <ZoomOutMapOutlinedIcon />
                       </Button>
-                      {/* <Typography
-                        variant="body1"
-                        sx={{ mb: 2, fontFamily: "sans-serif" }}
-                      >
-                        Rs.{amountSeparator(item.price)}.00
-                      </Typography> */}
+                      
                       <AfterAddCart
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}

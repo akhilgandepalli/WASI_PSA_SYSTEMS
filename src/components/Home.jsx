@@ -17,8 +17,8 @@ const Home = () => {
   const { setNavlink, clientImages} = useContext(globalContext);
   const navigate = useNavigate();
   //filter items as per type
-  const molecularSieves = products.filter((e) => e.type === "Molecular Sieves");
-  const valves = products.filter((e) => e.type === "Industrial Valves");
+  const molecularSieves = products?.filter((e) => e.type === "Molecular Sieves");
+  const valves = products?.filter((e) => e.type === "Industrial Valves");
 
   useEffect(() => {
     setNavlink("Home");

@@ -17,7 +17,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import products from "../products";
-import { amountSeparator, globalContext } from "../App";
+import { globalContext } from "../App";
 import { useNavigate } from "react-router";
 import AfterAddCart from "./AfterAddCart";
 
@@ -147,7 +147,7 @@ const CardsCarousel = ({ items }) => {
               <Card
                 elevation={5}
                 sx={{
-                  minHeight: 250,
+                  height: 250,
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
@@ -181,16 +181,7 @@ const CardsCarousel = ({ items }) => {
                   <Typography variant="p" sx={{ color: "#364253" }}>
                     {item.name}
                   </Typography>
-                  {/* <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#000",
-                    fontWeight: 600,
-                    fontFamily: "sans-serif",
-                  }}
-                >
-                  Rs.{amountSeparator(item.price)}.00
-                </Typography> */}
+                  
                 </CardContent>
                 {/* Hover Overlay */}
                 {hovered === item.id && (
@@ -239,12 +230,7 @@ const CardsCarousel = ({ items }) => {
                     <Button sx={{ color: "#fff" }}>
                       <ZoomOutMapOutlinedIcon />
                     </Button>
-                    {/* <Typography
-                    variant="body1"
-                    sx={{ mb: 2, fontFamily: "sans-serif" }}
-                  >
-                    Rs.{amountSeparator(item.price)}.00
-                  </Typography> */}
+                    
                     <AfterAddCart
                       openDialog={openDialog}
                       setOpenDialog={setOpenDialog}

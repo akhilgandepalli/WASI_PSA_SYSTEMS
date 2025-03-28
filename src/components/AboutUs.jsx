@@ -8,7 +8,7 @@ const AboutUs = () => {
 
   useEffect(() => {
     setNavlink("About Us");
-  });
+  },[]);
 
   return (
     <>

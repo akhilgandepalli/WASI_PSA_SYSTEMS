@@ -49,7 +49,7 @@ const Clients = () => {
 
   useEffect(() => {
     setNavlink("Clients");
-  });
+  },[]);
 
   return (
     <>

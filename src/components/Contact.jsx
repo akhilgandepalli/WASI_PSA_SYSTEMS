@@ -10,30 +10,30 @@ import Banner from "./Banner";
 
 const Contact = () => {
   const { setNavlink } = useContext(globalContext);
-  const [contact, setContact] = useState({});
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-  } = useForm({
-    defaultValues: {
-      fullname: "",
-      email: "",
-      message: "",
-      mobile: "",
-    },
-  });
+  // const [contact, setContact] = useState({});
+  // const {
+  //   handleSubmit,
+  //   control,
+  //   formState: { errors },
+  //   reset,
+  // } = useForm({
+  //   defaultValues: {
+  //     fullname: "",
+  //     email: "",
+  //     message: "",
+  //     mobile: "",
+  //   },
+  // });
 
-  const onSubmit = (data) => {
-    setContact(data);
-    console.log(data);
-    reset();
-  };
+  // const onSubmit = (data) => {
+  //   setContact(data);
+  //   console.log(data);
+  //   reset();
+  // };
 
   useEffect(() => {
     setNavlink("Contact Us");
-  });
+  },[]);
 
   return (
     <>

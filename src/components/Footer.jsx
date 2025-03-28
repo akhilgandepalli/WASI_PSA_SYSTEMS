@@ -24,7 +24,7 @@ const Footer = () => {
       sx={{
         width: "100%",
         bgcolor: "#253041",
-        height: { xs: "auto", md: "60vh" },
+        height: { xs: "auto", md: "400px" },
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

@@ -12,7 +12,7 @@ import {
 import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
 import { ShoppingCart } from "@mui/icons-material";
 import products from "../products";
-import { amountSeparator, globalContext } from "../App";
+import { globalContext } from "../App";
 import { useNavigate } from "react-router";
 import AfterAddCart from "./AfterAddCart";
 
@@ -56,7 +56,7 @@ const SearchResult = () => {
     //console.log("Cart:", cart); // For debugging
   };
 
-  const results = products.filter(
+  const results = products?.filter(
     (item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.type.toLowerCase().includes(searchQuery.toLowerCase())
@@ -138,16 +138,7 @@ const SearchResult = () => {
                     <Typography variant="p" sx={{ color: "#364253" }}>
                       {item.name}
                     </Typography>
-                    {/* <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#000",
-                        fontWeight: 600,
-                        fontFamily: "sans-serif",
-                      }}
-                    >
-                      Rs.{amountSeparator(item.price)}.00
-                    </Typography> */}
+                    
                   </CardContent>
                   {/* Hover Overlay */}
                   {hovered === item.id && (
@@ -196,12 +187,7 @@ const SearchResult = () => {
                       <Button sx={{ color: "#fff" }}>
                         <ZoomOutMapOutlinedIcon />
                       </Button>
-                      {/* <Typography
-                        variant="body1"
-                        sx={{ mb: 2, fontFamily: "sans-serif" }}
-                      >
-                        Rs.{amountSeparator(item.price)}.00
-                      </Typography> */}
+                      
                       <AfterAddCart
                         openDialog={openDialog}
                         setOpenDialog={setOpenDialog}

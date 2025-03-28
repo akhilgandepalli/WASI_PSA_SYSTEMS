@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import Navlinks from "./Navlinks.jsx";
 import {
   Badge,
@@ -13,17 +12,16 @@ import {
   Toolbar,
   IconButton,
   Box,
-  Button,
-  styled,
 } from "@mui/material";
 import { useNavigate } from "react-router";
 import { globalContext } from "../App.jsx";
+import ProfileMenu from "./ProfileMenu.jsx";
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [top, setTop] = useState(40)
-  const { cart } = useContext(globalContext);
+  const [top, setTop] = useState(40);
+  const { cart, setNavlink, adminData } = useContext(globalContext);
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -57,26 +55,17 @@ const Navbar = () => {
   return (
     <AppBar
       sx={{
-        backgroundColor: !top?"rgba(230, 230, 230, 0.5)":'#fff',
+        backgroundColor: !top ? "rgba(230, 230, 230, 0.5)" : "#fff",
         backdropFilter: "blur(10px)",
         position: "fixed",
         top: { xs: 0, md: top },
         padding: { xs: 1, md: "8px 120px" },
-        transition:'top 0.5s ease'
+        transition: "top 0.5s ease",
       }}
     >
       <Toolbar
         sx={{ display: "flex", justifyContent: "space-between", p: { md: 0 } }}
       >
-        {/* Menu Icon for Mobile */}
-        <IconButton
-          edge="start"
-          aria-label="menu"
-          sx={{ mr: 0, display: { md: "none" } }}
-        >
-          <MenuIcon onClick={toggleDrawer(true)} />
-        </IconButton>
-
         {/* Logo */}
         <Box
           component={"img"}
@@ -91,12 +80,12 @@ const Navbar = () => {
 
         <Navlinks openD={open} toggleDrawer={toggleDrawer} />
 
-        {/* Cart Icon */}
+        {/*Icons */}
         <Box
           sx={{
             position: "relative",
             display: "flex",
-            gap: { xs: 0, md: 1 },
+            gap: { xs: 0, md: 0 },
             mr: { xs: -2, md: 0 },
           }}
         >
@@ -115,7 +104,7 @@ const Navbar = () => {
             }}
           >
             <InputBase
-              sx={{ p: 1, flex: 1,borderTop:'4px solid #5e8930' }}
+              sx={{ p: 1, flex: 1, borderTop: "4px solid #5e8930" }}
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -124,29 +113,41 @@ const Navbar = () => {
               type="submit"
               sx={{
                 backgroundColor: "#5e8930",
-                color:'#fff',
+                color: "#fff",
                 //p: "4px 6px",
-                borderRadius:0,
-                "&:hover": { background: "#5e8950"},
+                borderRadius: 0,
+                "&:hover": { background: "#5e8950" },
               }}
             >
               <SearchOutlinedIcon />
             </IconButton>
           </Paper>
-          <IconButton onClick={() => setSearchOpen(!searchOpen)}>
-            {searchOpen?<CloseIcon />:<SearchOutlinedIcon />}
-          </IconButton>
+          {/* Menu Icon for Mobile */}
           <IconButton
+            edge="start"
+            aria-label="menu"
+            sx={{ mr: 0, display: { md: "none" } }}
+          >
+            <MenuIcon onClick={toggleDrawer(true)} />
+          </IconButton>
+          {/* Search Icon */}
+          <IconButton title="Search" onClick={() => setSearchOpen(!searchOpen)}>
+            {searchOpen ? <CloseIcon /> : <SearchOutlinedIcon />}
+          </IconButton>
+          {/* Cart Icon */}
+          <IconButton
+            title="Cart"
             onClick={() => {
               navigate("/cart");
               window.scrollTo(0, 0);
             }}
-            sx={{ mr: { md: -1 } }}
+            //sx={{ mr: { md: -1 } }}
           >
             <Badge badgeContent={cart.length} color="error">
               <LocalMallOutlinedIcon />
             </Badge>
           </IconButton>
+          <ProfileMenu />
         </Box>
       </Toolbar>
     </AppBar>

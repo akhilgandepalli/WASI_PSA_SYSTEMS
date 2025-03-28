@@ -30,7 +30,7 @@ const Product = () => {
 
   const { cart, setCart, setNavlink } = useContext(globalContext);
   const { name, id } = useParams();
-  const productItem = products.find((item) => item.id == id);
+  const productItem = products?.find((item) => item.id == id);
   const allImages = [productItem?.image];
 
   const handleChange = (event) => {
@@ -178,9 +178,7 @@ const Product = () => {
           >
             {productItem.name}
           </Typography>
-          {/* <Typography variant="h6">
-            <strong>Price: </strong>Rs.{amountSeparator(productItem.price)}.00
-          </Typography> */}
+          
           <Typography
             variant="body2"
             sx={{ color: "#fff", bgcolor: "blue", textAlign: "center" }}

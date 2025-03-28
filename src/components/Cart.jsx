@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Add, Remove, Delete } from "@mui/icons-material";
 import { useContext, useEffect } from "react";
-import { amountSeparator, globalContext } from "../App";
+import { globalContext } from "../App";
 import { useNavigate } from "react-router";
 
 const ShowCart = () => {
@@ -154,9 +154,7 @@ const ShowCart = () => {
                 >
                   {item.name}
                 </Typography>
-                {/* <Typography variant="body2" fontWeight="bold" color="#000">
-                  Rs.{amountSeparator(item.price)}.00
-                </Typography> */}
+                
                 <Box
                   sx={{ display: "flex", alignItems: "center", gap: 1, ml: -1 }}
                 >
@@ -220,8 +218,7 @@ const ShowCart = () => {
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Typography variant="body1" sx={{ mb: 1 }}>
-            {/* Subtotal: <strong>Rs.{amountSeparator(subtotal)}.00</strong> */}
-            Total items:<strong>&nbsp;{amountSeparator(subTotal)}</strong>
+            Total items:<strong>&nbsp;{subTotal}</strong>
           </Typography>
           <Button
             variant="contained"

@@ -70,7 +70,7 @@ const Recommended = ({setValue}) => {
             mb: 6,
           }}
         >
-          {products.slice(2, 8).map((item) => (
+          {products?.slice(2, 8).map((item) => (
             <Box
               key={item.id}
               sx={{ px: 1, position: "relative" }}
@@ -116,16 +116,7 @@ const Recommended = ({setValue}) => {
                   <Typography variant="p" sx={{ color: "#364253" }}>
                     {item.name}
                   </Typography>
-                  {/* <Typography
-                    variant="body1"
-                    sx={{
-                      color: "#000",
-                      fontWeight: 600,
-                      fontFamily: "sans-serif",
-                    }}
-                  >
-                    Rs.{amountSeparator(item.price)}.00
-                  </Typography> */}
+                  
                 </CardContent>
                 {/* Hover Overlay */}
                 {hovered === item.id && (
@@ -176,12 +167,7 @@ const Recommended = ({setValue}) => {
                     <Button sx={{ color: "#fff" }}>
                       <ZoomOutMapOutlinedIcon />
                     </Button>
-                    {/* <Typography
-                      variant="body1"
-                      sx={{ mb: 2, fontFamily: "sans-serif" }}
-                    >
-                      Rs.{amountSeparator(item.price)}.00
-                    </Typography> */}
+                    
                     <AfterAddCart
                       openDialog={openDialog}
                       setOpenDialog={setOpenDialog}

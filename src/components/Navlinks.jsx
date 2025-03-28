@@ -79,7 +79,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
           display: { xs: "none", md: "flex" },
           gap: 2,
           position: "relative",
-          padding: "0 44px",
+          padding: "0 20px 0 28px",
         }}
       >
         {pages.map((page) =>
@@ -240,7 +240,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
           </Box>
           <List sx={{ borderBottom: "4px solid #364253" }}>
             {pages.map((page, i) => (
-              <>
+              <Box key={page} sx={{ width: "100%" }}>
                 <ListItem
                   button
                   key={'list'+i}
@@ -339,7 +339,7 @@ export default function Navlinks({ openD, toggleDrawer }) {
                     </List>
                   </Collapse>
                 )}
-              </>
+              </Box>
             ))}
           </List>
           <Box

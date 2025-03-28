@@ -8,8 +8,8 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setNavlink("Contact");
-  });
+    setNavlink("Error");
+  },[]);
 
   return (
     <Box
