@@ -54,6 +54,7 @@ const AdminPage = () => {
           alignItems: "center",
           padding: { xs: "40px 20px", md: "40px 120px" },
           gap: 3,
+          borderBottom: "4px solid #f5f5f5",
         }}
       >
         <Typography variant="h6">AdminPage</Typography>
@@ -81,6 +82,7 @@ const AdminPage = () => {
           />
         )}
       </Box>
+      <Typography variant="h5" sx={{textAlign:'center',pt:4}}>Products</Typography>
       <Box
         sx={{
           display: "flex",
@@ -91,12 +93,14 @@ const AdminPage = () => {
           m: "40px 0",
         }}
       >
+        
         {productsData?.map((item) => (
           <Card
+          title={openForm&&'Close the form to Edit or Delete'}
             key={item.id}
             elevation={5}
             sx={{
-              height: 300,
+              minHeight: 320,
               width: 320,
               display: "flex",
               flexDirection: "column",
@@ -127,14 +131,15 @@ const AdminPage = () => {
                 gap: 1.5,
               }}
             >
-              <Typography variant="p" sx={{ color: "#364253" }}>
+              <Typography variant="p" sx={{ color: "#364253", textAlign: "left", wordBreak: 'break-word' }}>
                 <strong>Name:</strong>&nbsp;{item.name}
               </Typography>
-              <Typography variant="p" sx={{ color: "#364253" }}>
+              <Typography variant="p" sx={{ color: "#364253", textAlign: "left", wordBreak: 'break-word' }}>
                 <strong>Type:</strong>&nbsp;{item.type}
               </Typography>
               <Box sx={{width:'100%' ,display: "flex",gap:4,}}>
                 <Button
+                title="Edit Product"
                   variant="contained"
                   sx={{
                     bgcolor: "#253041",
@@ -147,6 +152,7 @@ const AdminPage = () => {
                   Edit
                 </Button>
                 <Button
+                title="Delete Product"
                   variant="contained"
                   sx={{
                     bgcolor: "#D63C3C",
